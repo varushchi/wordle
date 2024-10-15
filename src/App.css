@@ -1,0 +1,8 @@
+.App{
+  max-width: calc(5*30px + 5*5px);
+  margin-inline: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
