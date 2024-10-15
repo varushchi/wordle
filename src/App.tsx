@@ -32,8 +32,6 @@ function App() {
   })
 
   function handleInput(e: React.KeyboardEvent<HTMLDivElement>){
-    console.log('key pressed', e.key, currentLetter)
-
     // complete row
     if (e.key === 'Enter' && currentLetter === 5){
 
@@ -44,11 +42,13 @@ function App() {
 
       if (words.find(elem => elem === word)){
         setWordleState(() => {
+          let tempWordOfToday = wordOfToday
           return(
             wordleState.map((row, RowIndex) => {
               if (RowIndex === currentRow){
                 return row.map((letter, letterIndex) => {
-                  if (wordOfToday.includes(letter.value)){
+                  if (tempWordOfToday.includes(letter.value)){
+                    tempWordOfToday = tempWordOfToday.replace(letter.value, '')
                     if (wordOfToday[letterIndex] === letter.value){
                       return {...letter, color: 'green'}
                     }
