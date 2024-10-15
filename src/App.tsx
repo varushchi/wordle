@@ -31,7 +31,7 @@ function App() {
   const [streak, setStreak] = useState(localStorage.getItem('streak') !== null ? Number(localStorage.getItem('streak')) : 0)
 
   useEffect(() => {
-    setWordOfToday(words[(Number(new Date().toISOString().split('T')[0].split('-').join(''))) % words.length])
+    setWordOfToday(words[new Date().getTime() % words.length])
   },[])
 
   useEffect(() => {
