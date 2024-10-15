@@ -57,6 +57,10 @@ function App() {
   })
 
   function handleInput(e: React.KeyboardEvent<HTMLDivElement>){
+
+    if (win || loss){
+      return
+    }
     // complete row
     if (e.key === 'Enter' && currentLetter === 5){
       let word = ''
