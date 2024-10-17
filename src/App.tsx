@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Row from './Row';
-import words from './data/5-letter-words.json'
+import words from './data/five-letter-words.json'
 import WinLossPage from './WinLossPage';
 
 function App() {
@@ -25,13 +25,21 @@ function App() {
   const [wordleState, setWordleState] = useState<WordleType>(JSON.parse(localStorage.getItem('wordleState') || '""') ? JSON.parse(localStorage.getItem('wordleState') || '""') : initialState)
   const [currentLetter, setCurrentLetter] = useState(localStorage.getItem('currentLetter') !== null ? Number(localStorage.getItem('currentLetter')) : 0)
   const [currentRow, setCurrentRow] = useState(localStorage.getItem('currentRow') !== null ? Number(localStorage.getItem('currentRow')) : 0)
-  const [wordOfToday, setWordOfToday] = useState('')
+  const [wordOfToday, setWordOfToday] = useState(localStorage.getItem('wordOfToday') !== null ? String(localStorage.getItem('wordOfToday')) : '')
   const [win, setWin] = useState(localStorage.getItem('win') !== null ? Boolean(localStorage.getItem('win')) : false)
   const [loss, setLoss] = useState(localStorage.getItem('loss') !== null ? Boolean(localStorage.getItem('loss')) : false)
   const [streak, setStreak] = useState(localStorage.getItem('streak') !== null ? Number(localStorage.getItem('streak')) : 0)
 
   useEffect(() => {
-    setWordOfToday(words[new Date().getTime() % words.length])
+    setWordOfToday(words[new Date().getTime() % words.length].toLowerCase())
+    if (localStorage.getItem('wordOfToday') !== wordOfToday){
+      setCurrentLetter(0)
+      setCurrentRow(0)
+      setWordleState(initialState)
+      setWin(false)
+      setLoss(false)
+    }
+    localStorage.setItem('wordOfToday', wordOfToday)
   },[])
 
   useEffect(() => {
@@ -50,6 +58,11 @@ function App() {
     localStorage.setItem('streak', String(streak))
   },[streak])
 
+  useEffect(() => {
+    localStorage.setItem('win', String(win))
+    localStorage.setItem('loss', String(loss))
+  },[win, loss])
+
   const rowElem = wordleState.map((elem: RowType, index: number) => {
     return(
       <Row data = {elem} index = {index} key={index}/>
@@ -67,7 +80,7 @@ function App() {
       wordleState[currentRow].forEach((elem: LetterType) => {
         word += elem.value  
       })
-      if (words.find(elem => elem === word)){
+      if (words.find(elem => elem.toLowerCase() === word)){
         setWordleState(() => {
           let tempWordOfToday = wordOfToday
           return(
@@ -98,13 +111,11 @@ function App() {
       if (word === wordOfToday){
         setWin(true)
         setStreak(streak + 1)
-        localStorage.setItem('win', String(win))
       }
 
       if(currentRow === 5){
         setLoss(true)
         setStreak(0)
-        localStorage.setItem('loss', String(loss))
       }
     }
 
@@ -129,7 +140,6 @@ function App() {
       setCurrentLetter(currentLetter - 1)
     }
 
-
     // write letter
     if (e.key !== 'Enter' && e.key !== 'Backspace' && currentLetter < 5 && currentRow < 6 && e.key !== 'Alt' && e.key !== 'Tab'){
       setWordleState(() => {
@@ -150,8 +160,6 @@ function App() {
       setCurrentLetter(currentLetter + 1)
     }
   }
-
-  console.log(streak, Number(localStorage.getItem('streak')))
 
   return (
     <div className="App" onKeyDown={(e) => handleInput(e)} tabIndex={0}>
