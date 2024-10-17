@@ -1,8 +1,14 @@
 .App{
-  max-width: calc(5*30px + 5*5px);
+  width: calc(5*62px + 5*5px);
   margin-inline: auto;
   margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.App:focus{
+  outline: none;
 }

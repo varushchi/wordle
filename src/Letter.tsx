@@ -8,10 +8,21 @@ interface Props{
 
 export default function Letter(props: Props) {
 
-  const borderColor = props.value === '' ? 'gray' : 'black'
+  const grayWithoutValue = '#d3d6da'
+  const grayWithValue = '#878a8c'
+
+  const borderColor = props.value === '' ? grayWithoutValue : grayWithValue
   return (
-    <div className={`Letter ${props.value && 'added-new'}`} style={{backgroundColor: props.color, border: `1px solid ${borderColor}`}}>
-      {props.value}
+    <div
+      className={`Letter ${props.value && 'added-new'} ${props.color && 'row-completed'}`}
+      style={{
+        backgroundColor: props.color,
+        border: `${props.color ? 'none' : `2px solid ${borderColor}`}`,
+        width: `${props.color ? '66px' : '64px'}`,
+        height: `${props.color ? '66px' : '64px'}`
+      }}
+    >
+      <p>{props.value.toUpperCase()}</p>
     </div>
   )
 }

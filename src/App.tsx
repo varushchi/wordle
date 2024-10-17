@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Row from './Row';
 import words from './data/five-letter-words.json'
@@ -26,12 +26,24 @@ function App() {
   const [currentLetter, setCurrentLetter] = useState(localStorage.getItem('currentLetter') !== null ? Number(localStorage.getItem('currentLetter')) : 0)
   const [currentRow, setCurrentRow] = useState(localStorage.getItem('currentRow') !== null ? Number(localStorage.getItem('currentRow')) : 0)
   const [wordOfToday, setWordOfToday] = useState(localStorage.getItem('wordOfToday') !== null ? String(localStorage.getItem('wordOfToday')) : '')
-  const [win, setWin] = useState(localStorage.getItem('win') !== null ? Boolean(localStorage.getItem('win')) : false)
-  const [loss, setLoss] = useState(localStorage.getItem('loss') !== null ? Boolean(localStorage.getItem('loss')) : false)
+  const [win, setWin] = useState(localStorage.getItem('win') !== null ? (localStorage.getItem('win') === 'true' ? true : false)  : false)
+  const [loss, setLoss] = useState(localStorage.getItem('loss') !== null ? (localStorage.getItem('loss') === 'true' ? true : false) : false)
   const [streak, setStreak] = useState(localStorage.getItem('streak') !== null ? Number(localStorage.getItem('streak')) : 0)
+  const [notAWord, setNotAWord] = useState(false)
+  const divRef: React.RefObject<HTMLDivElement> = useRef(null)
+
+  const yellowBackGround = '#c9b458'
+  const greenBackGround = '#6aaa64'
+  const grayBackGround = '#787c7e'
 
   useEffect(() => {
-    setWordOfToday(words[new Date().getTime() % words.length].toLowerCase())
+    if (divRef && divRef.current){
+      divRef.current.focus()
+    }
+  },[])
+
+  useEffect(() => {
+    setWordOfToday(words[(Number(new Date().toISOString().split('T')[0].split('-').join(''))) % words.length].toLowerCase())
     if (localStorage.getItem('wordOfToday') !== wordOfToday){
       setCurrentLetter(0)
       setCurrentRow(0)
@@ -74,6 +86,9 @@ function App() {
     if (win || loss){
       return
     }
+
+    setNotAWord(false)
+
     // complete row
     if (e.key === 'Enter' && currentLetter === 5){
       let word = ''
@@ -90,11 +105,11 @@ function App() {
                   if (tempWordOfToday.includes(letter.value)){
                     tempWordOfToday = tempWordOfToday.replace(letter.value, '')
                     if (wordOfToday[letterIndex] === letter.value){
-                      return {...letter, color: 'green'}
+                      return {...letter, color: greenBackGround}
                     }
-                    return {...letter, color: 'yellow'}
+                    return {...letter, color: yellowBackGround}
                   }
-                  return {...letter, color: 'gray'}
+                  return {...letter, color: grayBackGround}
                 })
               }
               return row
@@ -105,7 +120,7 @@ function App() {
         setCurrentLetter(0)
       }
       else{
-        alert('not a word')
+        setNotAWord(true)
       }
 
       if (word === wordOfToday){
@@ -113,7 +128,7 @@ function App() {
         setStreak(streak + 1)
       }
 
-      if(currentRow === 5){
+      if(currentRow === 5 && word !== wordOfToday){
         setLoss(true)
         setStreak(0)
       }
@@ -162,8 +177,9 @@ function App() {
   }
 
   return (
-    <div className="App" onKeyDown={(e) => handleInput(e)} tabIndex={0}>
+    <div className="App" onKeyDown={(e) => handleInput(e)} ref={divRef} tabIndex={0}>
       <h1>WORDLE</h1>
+      {notAWord && <p>Not a word</p>}
       {rowElem}
       {(win || loss) && <WinLossPage streak={streak} win={win} answer={wordOfToday}/>}
     </div>

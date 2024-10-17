@@ -25,7 +25,7 @@ export default function WinPage(props : {streak: number, win: boolean, answer: s
 
   return (
     <div className='WinPage'>
-      {props.win && <h1>Congragulation!</h1>}
+      {props.win && <h1>Congratulation!</h1>}
       {!props.win && <h1>Better luck next time</h1>}
       {!props.win && <h3>Answer was {props.answer}</h3>}
       <h3>Come back in {calcTime}</h3>

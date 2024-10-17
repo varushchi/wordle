@@ -1,6 +1,12 @@
 .Letter{
-  width: 30px;
-  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > p{
+    font-size: 32px;
+    font-weight: bold;
+  } 
 }
 
 @keyframes newLetter{
@@ -15,6 +21,26 @@
   }
 }
 
+@keyframes rowCompleted{
+  0%{
+    transform: rotateX(50deg);
+  }
+  25%{
+    transform: rotateX(90deg);
+    color: white;
+
+  }
+  100%{
+    transform: rotateX(0deg);
+    color: white;
+  }
+}
+
 .added-new{
   animation: newLetter 0.1s;
+}
+
+.row-completed{
+  animation: rowCompleted 1s ease-out;
+  animation-fill-mode: forwards;
 }
