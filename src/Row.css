@@ -4,3 +4,49 @@
   column-gap: 5px;
   margin-bottom: 5px;
 }
+
+.not-a-word{
+  animation: notAWord 0.5s;
+}
+
+@keyframes notAWord{
+  8%{
+    transform:translateX(0px)
+  }
+  16%{
+    transform:translateX(5px)
+  }
+  24%{
+    transform:translateX(0px)
+  }
+  32%{
+    transform:translateX(-5px)
+  }
+  40%{
+    transform:translateX(0px)
+  }
+  48%{
+    transform:translateX(5px)
+  }
+  56%{
+    transform:translateX(0px)
+  }
+  64%{
+    transform:translateX(-5px)
+  }
+  72%{
+    transform:translateX(0px)
+  }
+  80%{
+    transform:translateX(5px)
+  }
+  88%{
+    transform:translateX(0px)
+  }
+  95%{
+    transform:translateX(-5px)
+  }
+  100%{
+    transform:translateX(0px)
+  }
+}

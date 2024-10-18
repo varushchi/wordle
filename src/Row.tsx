@@ -8,6 +8,7 @@ interface Props{
     color: string
   }[]
   index: number
+  notAWord: boolean
 }
 
 export default function Row(props: Props) {
@@ -20,7 +21,7 @@ export default function Row(props: Props) {
 
 
   return (
-    <div className='Row'>
+    <div className={`Row ${props.notAWord && 'not-a-word'}`}>
       {letterElem}
     </div>
   )

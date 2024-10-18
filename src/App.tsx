@@ -106,7 +106,7 @@ function App() {
 
   const rowElem = wordleState.map((elem: RowType, index: number) => {
     return(
-      <Row data = {elem} index = {index} key={index}/>
+      <Row data = {elem} index = {index} key={index} notAWord={currentRow === index ? notAWord : false}/>
     )
   })
 
@@ -303,10 +303,9 @@ function App() {
   return (
     <div className="App" onKeyDown={(e) => handleInput(e)} ref={divRef} tabIndex={0}>
       <h1>WORDLE</h1>
-      {notAWord && <p>Not a word</p>}
       {rowElem}
       {(win || loss) && <WinLossPage streak={streak} win={win} answer={wordOfToday}/>}
-      <Keyboard handleCLick={(e: React.MouseEvent<HTMLButtonElement>) => handleClick(e)} color={keyboardColor}/>
+      {!(win || loss) && <Keyboard handleCLick={(e: React.MouseEvent<HTMLButtonElement>) => handleClick(e)} color={keyboardColor}/>}
     </div>
   );
 }
