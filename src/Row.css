@@ -1,6 +1,6 @@
 .Row{
   display: grid;
-  grid-template-columns: repeat(5, 64px);
+  grid-template-columns: repeat(5, 52px);
   column-gap: 5px;
   margin-bottom: 5px;
 }

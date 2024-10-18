@@ -18,8 +18,8 @@ export default function Letter(props: Props) {
       style={{
         backgroundColor: props.color,
         border: `${props.color ? 'none' : `2px solid ${borderColor}`}`,
-        width: `${props.color ? '66px' : '64px'}`,
-        height: `${props.color ? '66px' : '64px'}`
+        width: `${props.color ? '54px' : '52px'}`,
+        height: `${props.color ? '54px' : '52px'}`
       }}
     >
       <p>{props.value.toUpperCase()}</p>
