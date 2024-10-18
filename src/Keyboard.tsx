@@ -18,7 +18,7 @@ export default function Keyboard(props: Props) {
     const grayBackGround = '#787c7e'
 
    for (let i = 0; i < props.color.green.length; i++){
-    if (props.color.green.includes(letter))
+    if (props.color.green[i].includes(letter))
       return greenBackGround
    }
 
