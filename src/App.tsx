@@ -60,7 +60,6 @@ function App() {
         const yellowButtons = wordleState[currentRow - 1].filter(elem => elem.color === yellowBackGround && !keyboardColor.yellow.find(findElem => findElem.includes(elem.value.toUpperCase()))).map(elem => elem.value.toUpperCase()).join()
         const greenButtons = wordleState[currentRow - 1].filter(elem => elem.color === greenBackGround && !keyboardColor.green.find(findElem => findElem.includes(elem.value.toUpperCase()))).map(elem => elem.value.toUpperCase()).join()
         const grayButtons = wordleState[currentRow - 1].filter(elem => elem.color === grayBackGround && !keyboardColor.gray.find(findElem => findElem.includes(elem.value.toUpperCase()))).map(elem => elem.value.toUpperCase()).join()
-        console.log(greenButtons)
         return({
           green: [...keyboardColor.green, greenButtons],
           yellow: [...keyboardColor.yellow, yellowButtons],
@@ -71,7 +70,9 @@ function App() {
   },[currentRow])
 
   useEffect(() => {
-    setWordOfToday(words[(Number(new Date().toISOString().split('T')[0].split('-').join(''))) % words.length].toLowerCase())
+    const dateIndex = (Number(new Date().toLocaleString().split(',')[0].split('.').join('')))
+    setWordOfToday(words[(dateIndex + dateIndex) % words.length].toLowerCase())
+    console.log(words.length)
     if (localStorage.getItem('wordOfToday') !== wordOfToday){
       setCurrentLetter(0)
       setCurrentRow(0)
