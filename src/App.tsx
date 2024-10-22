@@ -72,8 +72,7 @@ function App() {
   useEffect(() => {
     const dateIndex = (Number(new Date().toLocaleString().split(',')[0].split('.').join('')))
     setWordOfToday(words[(dateIndex + dateIndex) % words.length].toLowerCase())
-    console.log(words.length)
-    if (localStorage.getItem('wordOfToday') !== wordOfToday){
+    if (localStorage.getItem('wordOfToday') !== wordOfToday || localStorage.getItem('wordOfToday') === null || localStorage.getItem('wordOfToday') === '') {
       setCurrentLetter(0)
       setCurrentRow(0)
       setWordleState(initialState)
