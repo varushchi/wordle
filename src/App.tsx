@@ -70,8 +70,6 @@ function App() {
   },[currentRow])
 
   useEffect(() => {
-    const dateIndex = (Number(new Date().toLocaleString().split(',')[0].split('.').join('')))
-    setWordOfToday(words[(dateIndex + dateIndex) % words.length].toLowerCase())
     if (localStorage.getItem('wordOfToday') !== wordOfToday || localStorage.getItem('wordOfToday') === null || localStorage.getItem('wordOfToday') === '') {
       setCurrentLetter(0)
       setCurrentRow(0)
@@ -80,8 +78,10 @@ function App() {
       setLoss(false)
       setKeyboardColor({gray: [], yellow: [], green: []})
     }
+    const dateIndex = (Number(new Date().toLocaleString().split(',')[0].split('.').join('')) + 2)
+    setWordOfToday(words[(dateIndex + dateIndex) % words.length].toLowerCase())
     localStorage.setItem('wordOfToday', wordOfToday)
-  },[])
+  },[wordOfToday])
 
   useEffect(() => {
     localStorage.setItem('wordleState', JSON.stringify(wordleState))
