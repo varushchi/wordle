@@ -78,7 +78,7 @@ function App() {
       setLoss(false)
       setKeyboardColor({gray: [], yellow: [], green: []})
     }
-    const dateIndex = (Number(new Date().toLocaleString().split(',')[0].split('.').join('')) + 2)
+    const dateIndex = (Number(new Date().toLocaleString().split(',')[0].split('.').join('')))
     setWordOfToday(words[(dateIndex + dateIndex) % words.length].toLowerCase())
     localStorage.setItem('wordOfToday', wordOfToday)
   },[wordOfToday])
